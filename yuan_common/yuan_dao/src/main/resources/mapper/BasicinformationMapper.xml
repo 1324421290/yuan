@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zb.mapper.BasicinformationMapper">
+
+    <select id="getBasicinformationById" resultType="com.zb.entity.Basicinformation">
+        select
+                resumeId as resumeId,
+                basicName as basicName,
+                personalname as personalname,
+                phone as phone,
+                alipay as alipay
+        from basicinformation
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="id != null">
+                and id=#{id}
+            </if>
+        </trim>
+    </select>
+
+    <select id="getBasicinformationListByMap" resultType="com.zb.entity.Basicinformation" parameterType="java.util.Map">
+        select
+                resumeId as resumeId,
+                basicName as basicName,
+                personalname as personalname,
+                phone as phone,
+                alipay as alipay
+        from basicinformation
+        <trim prefix="where" prefixOverrides="and | or">
+                <if test="resumeId != null and resumeId!=''">
+                    and resumeId=#{resumeId}
+                </if>
+                <if test="basicName != null and basicName!=''">
+                    and basicName=#{basicName}
+                </if>
+                <if test="personalname != null and personalname!=''">
+                    and personalname=#{personalname}
+                </if>
+                <if test="phone != null and phone!=''">
+                    and phone=#{phone}
+                </if>
+                <if test="alipay != null and alipay!=''">
+                    and alipay=#{alipay}
+                </if>
+        </trim>
+        <if test="beginPos != null and pageSize != null ">
+            limit #{beginPos},#{pageSize}
+        </if>
+    </select>
+
+    <select id="getBasicinformationCountByMap" resultType="Integer"  parameterType="java.util.Map">
+        select count(*) from basicinformation
+        <trim prefix="where" prefixOverrides="and | or">
+                <if test="resumeId != null and resumeId!=''">
+                    and resumeId=#{resumeId}
+                </if>
+                <if test="basicName != null and basicName!=''">
+                    and basicName=#{basicName}
+                </if>
+                <if test="personalname != null and personalname!=''">
+                    and personalname=#{personalname}
+                </if>
+                <if test="phone != null and phone!=''">
+                    and phone=#{phone}
+                </if>
+                <if test="alipay != null and alipay!=''">
+                    and alipay=#{alipay}
+                </if>
+        </trim>
+    </select>
+
+    <insert id="insertBasicinformation" parameterType="com.zb.entity.Basicinformation">
+        insert into basicinformation(
+                        resumeId,
+                        basicName,
+                        personalname,
+                        phone,
+                        alipay)
+        values(
+                     #{resumeId},
+                     #{basicName},
+                     #{personalname},
+                     #{phone},
+                    #{alipay})
+    </insert>
+
+    <update id="updateBasicinformation" parameterType="com.zb.entity.Basicinformation">
+        update basicinformation
+        <trim prefix="set" suffixOverrides="," suffix="where id=#{id}">
+                        <if test="resumeId != null and resumeId!=''">
+                            resumeId=#{resumeId},
+                        </if>
+                        <if test="basicName != null and basicName!=''">
+                            basicName=#{basicName},
+                        </if>
+                        <if test="personalname != null and personalname!=''">
+                            personalname=#{personalname},
+                        </if>
+                        <if test="phone != null and phone!=''">
+                            phone=#{phone},
+                        </if>
+                        <if test="alipay != null and alipay!=''">
+                            alipay=#{alipay}
+                        </if>
+        </trim>
+    </update>
+</mapper>

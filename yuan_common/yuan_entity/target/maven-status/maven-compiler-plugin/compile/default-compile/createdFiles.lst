@@ -1,0 +1,7 @@
+com\zb\entity\Comment.class
+com\zb\entity\Resume.class
+com\zb\entity\Place.class
+com\zb\entity\Role.class
+com\zb\entity\Basicinformation.class
+com\zb\entity\Region.class
+com\zb\entity\Pushmessage.class

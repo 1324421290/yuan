@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zb.mapper.PushmessageMapper">
+
+    <select id="getPushmessageById" resultType="com.zb.entity.Pushmessage">
+        select
+                pushId as pushId,
+                companyId as companyId,
+                messageTime as messageTime
+        from pushmessage
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="id != null">
+                and id=#{id}
+            </if>
+        </trim>
+    </select>
+
+    <select id="getPushmessageListByMap" resultType="com.zb.entity.Pushmessage" parameterType="java.util.Map">
+        select
+                pushId as pushId,
+                companyId as companyId,
+                messageTime as messageTime
+        from pushmessage
+        <trim prefix="where" prefixOverrides="and | or">
+                <if test="pushId != null and pushId!=''">
+                    and pushId=#{pushId}
+                </if>
+                <if test="companyId != null and companyId!=''">
+                    and companyId=#{companyId}
+                </if>
+                <if test="messageTime != null and messageTime!=''">
+                    and messageTime=#{messageTime}
+                </if>
+        </trim>
+        <if test="beginPos != null and pageSize != null ">
+            limit #{beginPos},#{pageSize}
+        </if>
+    </select>
+
+    <select id="getPushmessageCountByMap" resultType="Integer"  parameterType="java.util.Map">
+        select count(*) from pushmessage
+        <trim prefix="where" prefixOverrides="and | or">
+                <if test="pushId != null and pushId!=''">
+                    and pushId=#{pushId}
+                </if>
+                <if test="companyId != null and companyId!=''">
+                    and companyId=#{companyId}
+                </if>
+                <if test="messageTime != null and messageTime!=''">
+                    and messageTime=#{messageTime}
+                </if>
+        </trim>
+    </select>
+
+    <insert id="insertPushmessage" parameterType="com.zb.entity.Pushmessage">
+        insert into pushmessage(
+                        pushId,
+                        companyId,
+                        messageTime)
+        values(
+                     #{pushId},
+                     #{companyId},
+                    #{messageTime})
+    </insert>
+
+    <update id="updatePushmessage" parameterType="com.zb.entity.Pushmessage">
+        update pushmessage
+        <trim prefix="set" suffixOverrides="," suffix="where id=#{id}">
+                        <if test="pushId != null and pushId!=''">
+                            pushId=#{pushId},
+                        </if>
+                        <if test="companyId != null and companyId!=''">
+                            companyId=#{companyId},
+                        </if>
+                        <if test="messageTime != null and messageTime!=''">
+                            messageTime=#{messageTime}
+                        </if>
+        </trim>
+    </update>
+</mapper>

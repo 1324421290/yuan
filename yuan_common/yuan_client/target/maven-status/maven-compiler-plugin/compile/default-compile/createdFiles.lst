@@ -1,0 +1,14 @@
+com\zb\fallback\RegionClientFallBack.class
+com\zb\fallback\ResumeClientFallBack.class
+com\zb\client\RestCommentClient.class
+com\zb\fallback\PlaceClientFallBack.class
+com\zb\client\RestBasicinformationClient.class
+com\zb\client\RestRoleClient.class
+com\zb\fallback\CommentClientFallBack.class
+com\zb\client\RestPlaceClient.class
+com\zb\fallback\RoleClientFallBack.class
+com\zb\fallback\PushmessageClientFallBack.class
+com\zb\fallback\BasicinformationClientFallBack.class
+com\zb\client\RestRegionClient.class
+com\zb\client\RestPushmessageClient.class
+com\zb\client\RestResumeClient.class

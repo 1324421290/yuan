@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zb.mapper.CommentMapper">
+
+    <select id="getCommentById" resultType="com.zb.entity.Comment">
+        select
+                commentId as commentId,
+                Starclass as Starclass,
+                commentcontent as commentcontent
+        from comment
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="id != null">
+                and id=#{id}
+            </if>
+        </trim>
+    </select>
+
+    <select id="getCommentListByMap" resultType="com.zb.entity.Comment" parameterType="java.util.Map">
+        select
+                commentId as commentId,
+                Starclass as Starclass,
+                commentcontent as commentcontent
+        from comment
+        <trim prefix="where" prefixOverrides="and | or">
+                <if test="commentId != null and commentId!=''">
+                    and commentId=#{commentId}
+                </if>
+                <if test="Starclass != null and Starclass!=''">
+                    and Starclass=#{Starclass}
+                </if>
+                <if test="commentcontent != null and commentcontent!=''">
+                    and commentcontent=#{commentcontent}
+                </if>
+        </trim>
+        <if test="beginPos != null and pageSize != null ">
+            limit #{beginPos},#{pageSize}
+        </if>
+    </select>
+
+    <select id="getCommentCountByMap" resultType="Integer"  parameterType="java.util.Map">
+        select count(*) from comment
+        <trim prefix="where" prefixOverrides="and | or">
+                <if test="commentId != null and commentId!=''">
+                    and commentId=#{commentId}
+                </if>
+                <if test="Starclass != null and Starclass!=''">
+                    and Starclass=#{Starclass}
+                </if>
+                <if test="commentcontent != null and commentcontent!=''">
+                    and commentcontent=#{commentcontent}
+                </if>
+        </trim>
+    </select>
+
+    <insert id="insertComment" parameterType="com.zb.entity.Comment">
+        insert into comment(
+                        commentId,
+                        Starclass,
+                        commentcontent)
+        values(
+                     #{commentId},
+                     #{Starclass},
+                    #{commentcontent})
+    </insert>
+
+    <update id="updateComment" parameterType="com.zb.entity.Comment">
+        update comment
+        <trim prefix="set" suffixOverrides="," suffix="where id=#{id}">
+                        <if test="commentId != null and commentId!=''">
+                            commentId=#{commentId},
+                        </if>
+                        <if test="Starclass != null and Starclass!=''">
+                            Starclass=#{Starclass},
+                        </if>
+                        <if test="commentcontent != null and commentcontent!=''">
+                            commentcontent=#{commentcontent}
+                        </if>
+        </trim>
+    </update>
+</mapper>

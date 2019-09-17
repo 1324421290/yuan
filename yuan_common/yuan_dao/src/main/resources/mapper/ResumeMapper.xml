@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zb.mapper.ResumeMapper">
+
+
+    <select id="getResumeList" resultType="com.zb.entity.Resume">
+        SELECT resumeId,resumeName,teamId,roleName,company,experience,salary,parttime,placeName,regName,ability,rojectexp FROM RESUME e
+        INNER JOIN role o
+        ON e.role=o.roleId
+        INNER JOIN region g
+        ON e.regId=g.regId
+        INNER JOIN place p
+        ON g.placeId=p.placeId
+    </select>
+
+    <select id="getResumeById" resultType="com.zb.entity.Resume">
+        select
+                resumeId as resumeId,
+                resumeName as resumeName,
+                teamId as teamId,
+                role as role,
+                company as company,
+                experience as experience,
+                salary as salary,
+                PartTime as PartTime,
+                regId as regId,
+                ability as ability,
+                rojectexp as rojectexp
+        from resume
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="resumeId != null and resumeId!=''">
+                and resumeId=#{resumeId}
+            </if>
+        </trim>
+    </select>
+
+    <select id="getResumeListByMap" resultType="com.zb.entity.Resume" parameterType="java.util.Map">
+        select
+                resumeId as resumeId,
+                resumeName as resumeName,
+                teamId as teamId,
+                role as role,
+                company as company,
+                experience as experience,
+                salary as salary,
+                PartTime as PartTime,
+                regId as regId,
+                ability as ability,
+                rojectexp as rojectexp
+        from resume
+        <trim prefix="where" prefixOverrides="and | or">
+                <if test="resumeId != null and resumeId!=''">
+                    and resumeId=#{resumeId}
+                </if>
+                <if test="resumeName != null and resumeName!=''">
+                    and resumeName=#{resumeName}
+                </if>
+                <if test="teamId != null and teamId!=''">
+                    and teamId=#{teamId}
+                </if>
+                <if test="role != null and role!=''">
+                    and role=#{role}
+                </if>
+                <if test="company != null and company!=''">
+                    and company=#{company}
+                </if>
+                <if test="experience != null and experience!=''">
+                    and experience=#{experience}
+                </if>
+                <if test="salary != null and salary!=''">
+                    and salary=#{salary}
+                </if>
+                <if test="PartTime != null and PartTime!=''">
+                    and PartTime=#{PartTime}
+                </if>
+                <if test="regId != null and regId!=''">
+                    and regId=#{regId}
+                </if>
+                <if test="ability != null and ability!=''">
+                    and ability=#{ability}
+                </if>
+                <if test="rojectexp != null and rojectexp!=''">
+                    and rojectexp=#{rojectexp}
+                </if>
+        </trim>
+        <if test="beginPos != null and pageSize != null ">
+            limit ${beginPos},${pageSize}
+        </if>
+    </select>
+
+    <select id="getResumeCountByMap" resultType="Integer"  parameterType="java.util.Map">
+        select count(*) from resume
+        <trim prefix="where" prefixOverrides="and | or">
+                <if test="resumeId != null and resumeId!=''">
+                    and resumeId=#{resumeId}
+                </if>
+                <if test="resumeName != null and resumeName!=''">
+                    and resumeName=#{resumeName}
+                </if>
+                <if test="teamId != null and teamId!=''">
+                    and teamId=#{teamId}
+                </if>
+                <if test="role != null and role!=''">
+                    and role=#{role}
+                </if>
+                <if test="company != null and company!=''">
+                    and company=#{company}
+                </if>
+                <if test="experience != null and experience!=''">
+                    and experience=#{experience}
+                </if>
+                <if test="salary != null and salary!=''">
+                    and salary=#{salary}
+                </if>
+                <if test="PartTime != null and PartTime!=''">
+                    and PartTime=#{PartTime}
+                </if>
+                <if test="regId != null and regId!=''">
+                    and regId=#{regId}
+                </if>
+                <if test="ability != null and ability!=''">
+                    and ability=#{ability}
+                </if>
+                <if test="rojectexp != null and rojectexp!=''">
+                    and rojectexp=#{rojectexp}
+                </if>
+        </trim>
+    </select>
+
+    <insert id="insertResume" parameterType="com.zb.entity.Resume">
+        insert into resume(
+                        resumeId,
+                        resumeName,
+                        teamId,
+                        role,
+                        company,
+                        experience,
+                        salary,
+                        PartTime,
+                        regId,
+                        ability,
+                        rojectexp)
+        values(
+                     #{resumeId},
+                     #{resumeName},
+                     #{teamId},
+                     #{role},
+                     #{company},
+                     #{experience},
+                     #{salary},
+                     #{PartTime},
+                     #{regId},
+                     #{ability},
+                    #{rojectexp})
+    </insert>
+
+    <update id="updateResume" parameterType="com.zb.entity.Resume">
+        update resume
+        <trim prefix="set" suffixOverrides="," suffix="where resumeId=#{resumeId}">
+                        <if test="resumeId != null and resumeId!=''">
+                            resumeId=#{resumeId},
+                        </if>
+                        <if test="resumeName != null and resumeName!=''">
+                            resumeName=#{resumeName},
+                        </if>
+                        <if test="teamId != null and teamId!=''">
+                            teamId=#{teamId},
+                        </if>
+                        <if test="role != null and role!=''">
+                            role=#{role},
+                        </if>
+                        <if test="company != null and company!=''">
+                            company=#{company},
+                        </if>
+                        <if test="experience != null and experience!=''">
+                            experience=#{experience},
+                        </if>
+                        <if test="salary != null and salary!=''">
+                            salary=#{salary},
+                        </if>
+                        <if test="PartTime != null and PartTime!=''">
+                            PartTime=#{PartTime},
+                        </if>
+                        <if test="regId != null and regId!=''">
+                            regId=#{regId},
+                        </if>
+                        <if test="ability != null and ability!=''">
+                            ability=#{ability},
+                        </if>
+                        <if test="rojectexp != null and rojectexp!=''">
+                            rojectexp=#{rojectexp}
+                        </if>
+        </trim>
+    </update>
+</mapper>

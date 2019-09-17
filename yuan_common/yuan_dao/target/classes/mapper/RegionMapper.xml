@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zb.mapper.RegionMapper">
+
+    <select id="getRegionById" resultType="com.zb.entity.Region">
+        select
+                regId as regId,
+                placeId as placeId,
+                regName as regName
+        from region
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="id != null">
+                and id=#{id}
+            </if>
+        </trim>
+    </select>
+
+    <select id="getRegionListByMap" resultType="com.zb.entity.Region" parameterType="java.util.Map">
+        select
+                regId as regId,
+                placeId as placeId,
+                regName as regName
+        from region
+        <trim prefix="where" prefixOverrides="and | or">
+                <if test="regId != null and regId!=''">
+                    and regId=#{regId}
+                </if>
+                <if test="placeId != null and placeId!=''">
+                    and placeId=#{placeId}
+                </if>
+                <if test="regName != null and regName!=''">
+                    and regName=#{regName}
+                </if>
+        </trim>
+        <if test="beginPos != null and pageSize != null ">
+            limit #{beginPos},#{pageSize}
+        </if>
+    </select>
+
+    <select id="getRegionCountByMap" resultType="Integer"  parameterType="java.util.Map">
+        select count(*) from region
+        <trim prefix="where" prefixOverrides="and | or">
+                <if test="regId != null and regId!=''">
+                    and regId=#{regId}
+                </if>
+                <if test="placeId != null and placeId!=''">
+                    and placeId=#{placeId}
+                </if>
+                <if test="regName != null and regName!=''">
+                    and regName=#{regName}
+                </if>
+        </trim>
+    </select>
+
+    <insert id="insertRegion" parameterType="com.zb.entity.Region">
+        insert into region(
+                        regId,
+                        placeId,
+                        regName)
+        values(
+                     #{regId},
+                     #{placeId},
+                    #{regName})
+    </insert>
+
+    <update id="updateRegion" parameterType="com.zb.entity.Region">
+        update region
+        <trim prefix="set" suffixOverrides="," suffix="where id=#{id}">
+                        <if test="regId != null and regId!=''">
+                            regId=#{regId},
+                        </if>
+                        <if test="placeId != null and placeId!=''">
+                            placeId=#{placeId},
+                        </if>
+                        <if test="regName != null and regName!=''">
+                            regName=#{regName}
+                        </if>
+        </trim>
+    </update>
+</mapper>
